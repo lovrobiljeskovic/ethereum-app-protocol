@@ -1,0 +1,48 @@
+###################
+#       Node      #
+###################
+
+.bin
+node_modules
+package-links.json
+
+###################
+#       Ruby      #
+###################
+
+Procfile.local
+.bundle
+
+###################
+#     OS/IDE     #
+###################
+
+Desktop.ini
+.DS_Store
+.idea
+.vscode/*
+.env
+
+###################
+#       Misc      #
+###################
+
+tmp/*
+log/*
+*.log
+
+###################
+#      Build      #
+###################
+
+dist/*
+dist/js/*
+dist/css/*
+build/js/*
+build/css/*
+
+###################
+#       Keep      #
+###################
+
+!.kepp
