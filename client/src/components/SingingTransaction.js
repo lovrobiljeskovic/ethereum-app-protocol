@@ -7,10 +7,11 @@ import contractDefinition from '../contracts/Verifier.json'
 import {Input, Button} from 'reactstrap'
 
 class SigningTransaction extends React.Component {
-  state = {web3: null, contract: null, accounts: null, data: "", address: "", signature: ""}
+  state = {web3: null, contract: null, accounts: null, data: "", address: ""}
 
   static propTypes = {
     signTx: PropTypes.func.isRequired,
+    signature: PropTypes.string.isRequired
   }
 
   componentDidMount = async () => {
@@ -84,11 +85,10 @@ class SigningTransaction extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    this.props.signTx({
+    const signature = this.props.signTx({
       data: this.state.data,
       address: this.state.address,
     });
-
   }
 
   render() {
@@ -118,6 +118,7 @@ class SigningTransaction extends React.Component {
         </div>
         </div>
         <Button onClick={this.handleSubmit}>Save</Button>
+        <p>SIGNATURE: {this.props.signature}</p>
       </div>
     );
   }
