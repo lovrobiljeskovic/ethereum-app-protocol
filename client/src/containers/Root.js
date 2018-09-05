@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Container } from 'kawax-js';
-import WorkingStuff from '../components/WorkingStuff';
+import SingingTransaction from '../components/SingingTransaction';
+import EthProtocol from '../containers/EthProtocol';
 
 class RootContainer extends React.Component {
 
   render() {
     return (
       <div>
-      <WorkingStuff/>
+      <EthProtocol/>
       </div>
     );
   }

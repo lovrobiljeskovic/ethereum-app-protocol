@@ -1,15 +1,20 @@
 import React from 'react'
 import { Component } from 'kawax-js'
+import PropTypes from 'prop-types';
 import getWeb3 from '../utils/getWeb3'
 import getContractInstance from '../utils/getContractInstance'
 import contractDefinition from '../contracts/Verifier.json'
+import {Input, Button} from 'reactstrap'
 
-class WorkingStuff extends React.Component {
-  state = {web3: null, contract: null, accounts: null }
+class SigningTransaction extends React.Component {
+  state = {web3: null, contract: null, accounts: null, data: "", address: "", signature: ""}
+
+  static propTypes = {
+    signTx: PropTypes.func.isRequired,
+  }
 
   componentDidMount = async () => {
     try {
-      console.log("First line of tryblock")
       // Get network provider and web3 instance.
       const web3 = await getWeb3()
       // Use web3 to get the user's accounts.
@@ -24,11 +29,13 @@ class WorkingStuff extends React.Component {
     }
   }
 
+/*
   getPendingTx = () => {
     const {contract} = this.state
     const pending = contract.methods.getPendingTransactions().call()
     console.log("PENDING BOYOS", pending);
   }
+*/
 
   signTx = async () => {
     const { accounts, contract, web3} = this.state
@@ -68,6 +75,22 @@ class WorkingStuff extends React.Component {
     console.log(`is signed => ${signed}`)
   };
 
+  onChange = (event) => {
+    event.preventDefault();
+    this.setState({
+      [event.target.id]: event.target.value,
+    });
+  };
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    this.props.signTx({
+      data: this.state.data,
+      address: this.state.address,
+    });
+
+  }
+
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>
@@ -75,11 +98,30 @@ class WorkingStuff extends React.Component {
     return (
       <div className="App">
         <h1>Ethereum Protocol in the making</h1>
-        <button onClick={this.getPendingTx()}>Get pending tx</button>
+        <div className="form-row">
+        <div className="col">
+        Data to sign:
+          <Input
+            className="form-control"
+            id="data"
+            onChange={this.onChange}
+            value={this.state.data}
+          />
+        </div>
+        <div className="col">
+        Address to sign with:
+          <Input
+            className="form-control"
+            id="address"
+            onChange={this.onChange}
+          />
+        </div>
+        </div>
+        <Button onClick={this.handleSubmit}>Save</Button>
       </div>
     );
   }
 
 }
 
-export default Component(WorkingStuff);
+export default Component(SigningTransaction);
