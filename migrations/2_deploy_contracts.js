@@ -1,5 +1,5 @@
 const Verifier = artifacts.require('./Verifier.sol')
 
 module.exports = function (deployer) {
-  deployer.deploy(Verifier)
+  deployer.deploy(Verifier);
 }
