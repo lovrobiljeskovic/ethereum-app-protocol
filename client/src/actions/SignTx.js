@@ -5,18 +5,16 @@ class SignTx extends Action {
 
   static type = "SIGN";
 
-  pendingPayload = (tx) =>
-    ({ data: tx.data, address: tx.address });
-
   call = async ({data, address}) => {
     // Get network provider and web3 instance.
     const web3 = await getWeb3();
-    const hex_data = web3.utils.sha3(data);
-    const signature = await web3.eth.sign(hex_data, address);
+    const hexData = web3.utils.sha3(data);
+    const signature = await web3.eth.sign(hexData, address);
     console.log(`data ---------> ${data}`)
-    console.log(`hex(data) ----> ${hex_data}`)
+    console.log(`hex(data) ----> ${hexData}`)
     console.log(`sig ---------> ${signature}`)
     return {
+      hexData,
       signature
     };
   };

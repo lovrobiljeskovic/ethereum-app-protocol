@@ -11,7 +11,16 @@ class SigningTransaction extends React.Component {
 
   static propTypes = {
     signTx: PropTypes.func.isRequired,
-    signature: PropTypes.string.isRequired
+    signature: PropTypes.string,
+    hexData: PropTypes.string,
+    recoverAddress: PropTypes.func.isRequired,
+    recoveredAddress: PropTypes.string
+  }
+
+  static defaultProps = {
+    signature: String(),
+    hexData: String(),
+    recoveredAddress: String()
   }
 
   componentDidMount = async () => {
@@ -28,6 +37,32 @@ class SigningTransaction extends React.Component {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`)
       console.log(error)
     }
+  }
+
+  splitSignature = async () => {
+    const web3 = await getWeb3();
+    this.setState({ web3 })
+    const signature = this.props.signature;
+    console.log("SIGNATURE?????", this.props.signature);
+    const splitSignature = signature.substr(2);
+    var r = '0x' + splitSignature.slice(0, 64)
+    console.log("R", r);
+    var s = '0x' + splitSignature.slice(64, 128)
+    console.log("S", s);
+    var v = '0x' + splitSignature.slice(128, 130)
+    console.log("V", v);
+    var vDecimal = web3.utils.hexToNumber(v)
+    //v_decimal has to be either 27 or 28
+    if (vDecimal != 27 || vDecimal != 28) {
+      vDecimal += 27
+    }
+    console.log("VDEC", vDecimal);
+    this.props.recoverAddress({
+      hexData: this.props.hexData,
+      v: vDecimal,
+      r: r,
+      s: s
+    })
   }
 
 /*
@@ -49,12 +84,11 @@ class SigningTransaction extends React.Component {
     console.log(`sig ---------> ${signature}`)
 
     signature = signature.substr(2);
-    var r = '0x' + signature.slice(0, 64)
-    var s = '0x' + signature.slice(64, 128)
-    var v = '0x' + signature.slice(128, 130)
-    var v_decimal = this.state.web3.utils.toDecimal(v)
-    //v_decimal has to be either 27 or 28
-    if (v_decimal != 27 || v_decimal != 28) {
+    const r = '0x' + signature.slice(0, 64)
+    const s = '0x' + signature.slice(64, 128)
+    const v = '0x' + signature.slice(128, 130)
+    var v_decimal = web3.utils.toDecimal(v)
+    if(v_decimal != 27 || v_decimal != 28) {
       v_decimal += 27
     }
 
@@ -85,16 +119,18 @@ class SigningTransaction extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const signature = this.props.signTx({
+    this.props.signTx({
       data: this.state.data,
       address: this.state.address,
     });
   }
 
-  render() {
+  render =() => {
+    /*
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>
     }
+    */
     return (
       <div className="App">
         <h1>Ethereum Protocol in the making</h1>
@@ -117,8 +153,11 @@ class SigningTransaction extends React.Component {
           />
         </div>
         </div>
-        <Button onClick={this.handleSubmit}>Save</Button>
+        <Button onClick={this.handleSubmit}>Sign</Button>
         <p>SIGNATURE: {this.props.signature}</p>
+        <p>HEX DATA: {this.props.hexData}</p>
+        <Button onClick={this.splitSignature}>Split the signature</Button>
+        <p>RECOVERED ADDRESS: {this.props.recoveredAddress}</p>
       </div>
     );
   }
