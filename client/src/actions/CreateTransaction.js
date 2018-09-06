@@ -3,23 +3,24 @@ import { Action } from 'kawax-js';
 import getContractInstance from '../utils/getContractInstance';
 import contractDefinition from '../contracts/Verifier.json';
 
-class RecoverAddress extends Action {
+class CreateTransaction extends Action {
 
-  static type = "RECOVER";
+  static type = "CREATE"
 
-  call = async ({hexData, v, r, s}) => {
+  call = async ({hexData, address}) => {
     // Get network provider and web3 instance.
     const web3 = await getWeb3();
      // Get the contract instance by passing in web3 and the contract definition.
     const contract = await getContractInstance(web3, contractDefinition);
-    const address = await contract.methods.recoverAddr(hexData, v, r, s).call();
-    const signed = await contract.methods.isSigned(address, hexData, v, r, s).call();
+    contract.options.gas = 5000000;
+    const createTransaction = await contract.methods.createTransaction(hexData).send({from: address}).then(function(receipt){
+      return receipt.events
+    });
     return {
-      address,
-      signed
+      createTransaction
     };
   };
 
 }
 
-export default RecoverAddress;
+export default CreateTransaction;

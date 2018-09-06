@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from 'kawax-js';
+import VerifyData from '../components/VerifyData';
 import TransactionFlow from '../components/TransactionFlow';
-import SignTx from '../actions/SignTx';
+import SignTransaction from '../actions/SignTransaction';
 import RecoverAddress from '../actions/RecoverAddress';
+import CreateTransaction from '../actions/CreateTransaction';
 
 class EthProtocol extends React.Component {
 
@@ -14,15 +16,17 @@ class EthProtocol extends React.Component {
   });
 
   static propTypes = {
-    signTx: PropTypes.func.isRequired,
+    signTransaction: PropTypes.func.isRequired,
     signature: PropTypes.string,
     recoverAddress: PropTypes.func.isRequired,
     recoveredAddress: PropTypes.string,
+    createTransaction: PropTypes.func.isRequired
   };
 
   static dispatchToProps = {
-    signTx: SignTx.export(),
-    recoverAddress: RecoverAddress.export()
+    signTransaction: SignTransaction.export(),
+    recoverAddress: RecoverAddress.export(),
+    createTransaction: CreateTransaction.export()
   };
 
   static defaultProps = {
@@ -32,13 +36,18 @@ class EthProtocol extends React.Component {
 
   render() {
     return (
-      <TransactionFlow
-        signTx={this.props.signTx}
+      <div>
+      <VerifyData
+        signTransaction={this.props.signTransaction}
         signature={this.props.signature}
         hexData={this.props.hexData}
         recoverAddress={this.props.recoverAddress}
         recoveredAddress={this.props.recoveredAddress}
       />
+      <TransactionFlow
+        createTransaction={this.props.createTransaction}
+      />
+      </div>
     );
   }
 

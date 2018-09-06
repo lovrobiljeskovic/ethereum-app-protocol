@@ -1,7 +1,7 @@
 import getWeb3 from '../utils/getWeb3';
 import { Action } from 'kawax-js';
 
-class SignTx extends Action {
+class SignTransaction extends Action {
 
   static type = "SIGN";
 
@@ -18,4 +18,4 @@ class SignTx extends Action {
 
 }
 
-export default SignTx;
+export default SignTransaction;
