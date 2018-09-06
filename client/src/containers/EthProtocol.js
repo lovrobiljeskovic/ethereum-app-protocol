@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from 'kawax-js';
-import SingingTransaction from '../components/SingingTransaction';
+import TransactionFlow from '../components/TransactionFlow';
 import SignTx from '../actions/SignTx';
 import RecoverAddress from '../actions/RecoverAddress';
 
@@ -32,7 +32,7 @@ class EthProtocol extends React.Component {
 
   render() {
     return (
-      <SingingTransaction
+      <TransactionFlow
         signTx={this.props.signTx}
         signature={this.props.signature}
         hexData={this.props.hexData}

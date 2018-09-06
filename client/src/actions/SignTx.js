@@ -10,9 +10,6 @@ class SignTx extends Action {
     const web3 = await getWeb3();
     const hexData = web3.utils.sha3(data);
     const signature = await web3.eth.sign(hexData, address);
-    console.log(`data ---------> ${data}`)
-    console.log(`hex(data) ----> ${hexData}`)
-    console.log(`sig ---------> ${signature}`)
     return {
       hexData,
       signature

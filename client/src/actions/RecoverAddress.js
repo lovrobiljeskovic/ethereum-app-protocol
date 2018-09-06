@@ -14,7 +14,6 @@ class RecoverAddress extends Action {
     const contract = await getContractInstance(web3, contractDefinition)
     const address = await contract.methods.recoverAddr(hexData, v, r, s).call()
     const signed = await contract.methods.isSigned(address, hexData, v, r, s).call()
-    console.log("Recovered address:", address);
     return {
       address,
       signed
