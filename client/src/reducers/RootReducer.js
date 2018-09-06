@@ -7,7 +7,6 @@ class RootReducer extends Reducer {
     signed: false,
     hexData: "",
     signature: "",
-    createTransaction:""
   }
 
   signTransaction = (state, action) => {
@@ -27,9 +26,9 @@ class RootReducer extends Reducer {
   }
 
   createTransaction = (state, action) => {
-    const {...transaction} = action.payload;
+    const {createTransaction} = action.payload;
     return {
-      createTransaction: transaction
+      createTransaction
     };
   }
 

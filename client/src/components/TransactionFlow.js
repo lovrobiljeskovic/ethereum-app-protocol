@@ -8,7 +8,11 @@ class TransactionFlow extends React.Component {
   state = {hexData: "", address: ""}
 
   static propTypes = {
-    createTransaction: PropTypes.func.isRequired
+    createTransaction: PropTypes.func.isRequired,
+    transactionHash: PropTypes.string.isRequired,
+    transactionAddressCreation: PropTypes.string.isRequired,
+    transactionId: PropTypes.string.isRequired,
+    hashedDataPassedIn: PropTypes.string.isRequired,
   }
 
   onChange = (event) => {
@@ -49,6 +53,10 @@ class TransactionFlow extends React.Component {
         <p></p>
         <div className="col-sm-2">
         <Button type="button" className="btn btn-dark btn-sm-2" onClick={this.createTransaction}>Create a transaction</Button>
+        <p>Transaction Hash: {this.props.transactionHash}</p>
+        <p>Address which created transaction: {this.props.transactionAddressCreation}</p>
+        <p>Transaction ID: {this.props.transactionId} </p>
+        <p>Hash used for creating the transaction: {this.props.hashedDataPassedIn}</p>
         </div>
         </div>
       </div>
