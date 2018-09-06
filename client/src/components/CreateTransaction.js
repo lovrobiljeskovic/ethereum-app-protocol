@@ -3,16 +3,23 @@ import { Component } from 'kawax-js'
 import PropTypes from 'prop-types';
 import {Input, Button} from 'reactstrap'
 
-class TransactionFlow extends React.Component {
+class CreateTransaction extends React.Component {
 
-  state = {hexData: "", address: ""}
+  state = {hexData: "", address: "", transactionId: ""}
 
   static propTypes = {
     createTransaction: PropTypes.func.isRequired,
-    transactionHash: PropTypes.string.isRequired,
-    transactionAddressCreation: PropTypes.string.isRequired,
-    transactionId: PropTypes.string.isRequired,
-    hashedDataPassedIn: PropTypes.string.isRequired,
+    transactionHash: PropTypes.string,
+    transactionAddressCreation: PropTypes.string,
+    transactionId: PropTypes.string,
+    hashedDataPassedIn: PropTypes.string,
+  }
+
+  static defaultProps = {
+    transactionHash: String(),
+    transactionAddressCreation: String(),
+    transactionId: String(),
+    hashedDataPassedIn: String()
   }
 
   onChange = (event) => {
@@ -65,4 +72,4 @@ class TransactionFlow extends React.Component {
 
 }
 
-export default Component(TransactionFlow);
+export default Component(CreateTransaction);

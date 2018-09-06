@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from 'kawax-js';
 import VerifyData from '../components/VerifyData';
-import TransactionFlow from '../components/TransactionFlow';
-import SignTransaction from '../actions/SignTransaction';
+import CreateTransaction from '../components/CreateTransaction';
+import SignData from '../actions/SignData';
 import RecoverAddress from '../actions/RecoverAddress';
-import CreateTransaction from '../actions/CreateTransaction';
+import CreateTx from '../actions/CreateTransaction';
+import SignTx from '../actions/SignTransaction';
+import SignTransaction from '../components/SignTransaction';
 
 class EthProtocol extends React.Component {
 
@@ -20,7 +22,7 @@ class EthProtocol extends React.Component {
   });
 
   static propTypes = {
-    signTransaction: PropTypes.func.isRequired,
+    signData: PropTypes.func.isRequired,
     signature: PropTypes.string,
     recoverAddress: PropTypes.func.isRequired,
     recoveredAddress: PropTypes.string,
@@ -28,13 +30,15 @@ class EthProtocol extends React.Component {
     transactionHash: PropTypes.string,
     transactionAddressCreation: PropTypes.string,
     transactionId: PropTypes.string,
-    hashedDataPassedIn: PropTypes.string
+    hashedDataPassedIn: PropTypes.string,
+    signTransaction: PropTypes.func.isRequired
   };
 
   static dispatchToProps = {
-    signTransaction: SignTransaction.export(),
+    signData: SignData.export(),
     recoverAddress: RecoverAddress.export(),
-    createTransaction: CreateTransaction.export()
+    createTransaction: CreateTx.export(),
+    signTransaction: SignTx.export()
   };
 
   static defaultProps = {
@@ -49,18 +53,21 @@ class EthProtocol extends React.Component {
     return (
       <div>
       <VerifyData
-        signTransaction={this.props.signTransaction}
+        signData={this.props.signData}
         signature={this.props.signature}
         hexData={this.props.hexData}
         recoverAddress={this.props.recoverAddress}
         recoveredAddress={this.props.recoveredAddress}
       />
-      <TransactionFlow
+      <CreateTransaction
         createTransaction={this.props.createTransaction}
         transactionHash={this.props.transactionHash}
         transactionAddressCreation={this.props.transactionAddressCreation}
         transactionId={this.props.transactionId}
         hashedDataPassedIn={this.props.hashedDataPassedIn}
+      />
+      <SignTransaction
+        signTransaction={this.props.signTransaction}
       />
       </div>
     );

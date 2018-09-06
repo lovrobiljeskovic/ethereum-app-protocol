@@ -21,7 +21,7 @@ class VerifyData extends React.Component {
   state = {web3: null, data: "", address: ""}
 
   static propTypes = {
-    signTransaction: PropTypes.func.isRequired,
+    signData: PropTypes.func.isRequired,
     signature: PropTypes.string,
     hexData: PropTypes.string,
     recoverAddress: PropTypes.func.isRequired,
@@ -72,7 +72,7 @@ class VerifyData extends React.Component {
 
   getSignature = async (event) => {
     event.preventDefault();
-    this.props.signTransaction({
+    this.props.signData({
       data: this.state.data,
       address: this.state.address,
     });

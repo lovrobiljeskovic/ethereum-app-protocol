@@ -51,7 +51,7 @@ contract Verifier {
   function signTransaction(uint transactionId) public {
     Transaction storage transaction = _transactions[transactionId];
     require(0x0 != transaction.from, "Transaction must exist");
-    require(msg.sender != transaction.from, "Creator cannot sign a transaction");
+    //require(msg.sender != transaction.from, "Creator cannot sign a transaction");
     require(transaction.signatures[msg.sender] != 1, "Cannot sign a transaction more than once");
     transaction.signatures[msg.sender] = 1;
     transaction.signatureCount++;

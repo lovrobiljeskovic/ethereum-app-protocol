@@ -1,21 +1,24 @@
-import getWeb3 from '../utils/getWeb3';
+import getWeb3 from '../utils/getWeb3'
 import { Action } from 'kawax-js';
+import getContractInstance from '../utils/getContractInstance';
+import contractDefinition from '../contracts/Verifier.json';
 
 class SignTransaction extends Action {
 
   static type = "SIGN";
 
-  call = async ({data, address}) => {
-    // Get network provider and web3 instance.
+  call = async({transactionId, address}) => {
     const web3 = await getWeb3();
-    const hexData = web3.utils.sha3(data);
-    const signature = await web3.eth.sign(hexData, address);
+    const contract = await getContractInstance(web3, contractDefinition);
+    contract.options.gas = 5000000;
+    const signTransaction = await contract.methods.signTransaction(transactionId).send({from: address}).then(function(receipt){
+      return receipt;
+    });
     return {
-      hexData,
-      signature
+      signTransaction
     };
   };
 
 }
 
-export default SignTransaction;
+export default SignTransaction

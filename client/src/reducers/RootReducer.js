@@ -9,7 +9,7 @@ class RootReducer extends Reducer {
     signature: "",
   }
 
-  signTransaction = (state, action) => {
+  signData = (state, action) => {
     const {...transaction} = action.payload;
     return {
       hexData: transaction.hexData,
@@ -32,8 +32,15 @@ class RootReducer extends Reducer {
     };
   }
 
+  signTransaction = (state, action) => {
+    const {signTransaction} = action.payload;
+    return {
+      signTransaction
+    };
+  }
+
   state = this.matchSuccess({
-    SIGN: this.signTransaction,
+    'SIGN.DATA': this.signData,
     RECOVER: this.recoverAddress,
     CREATE: this.createTransaction
   });
