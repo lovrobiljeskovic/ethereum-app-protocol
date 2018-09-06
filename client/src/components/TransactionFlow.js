@@ -82,8 +82,8 @@ class TransactionFlow extends React.Component {
     return (
       <div className="App">
         <h1>Ethereum Protocol in the making</h1>
-        <div className="form-row">
-        <div className="col">
+        <div className="d-flex flex-column">
+        <div className="col-sm-2">
         Data to sign:
           <Input
             className="form-control"
@@ -92,7 +92,7 @@ class TransactionFlow extends React.Component {
             value={this.state.data}
           />
         </div>
-        <div className="col">
+        <div className="col-sm-2">
         Address to sign with:
           <Input
             className="form-control"
@@ -100,12 +100,15 @@ class TransactionFlow extends React.Component {
             onChange={this.onChange}
           />
         </div>
-        </div>
-        <Button onClick={this.signTransaction}>Get the signature and hashed data</Button>
+        <p></p>
+        <div className="col-sm-2">
+        <Button type="button" className="btn btn-dark btn-sm-2" onClick={this.signTransaction}>Get the signature and hashed data</Button>
         <p>SIGNATURE: {this.props.signature}</p>
         <p>HEX DATA: {this.props.hexData}</p>
-        <Button onClick={this.splitSignature}>Sign</Button>
+        <Button type="button" className="btn btn-dark" onClick={this.splitSignature}>Sign</Button>
         <p>RECOVERED ADDRESS: {this.props.recoveredAddress}</p>
+        </div>
+        </div>
       </div>
     );
   }

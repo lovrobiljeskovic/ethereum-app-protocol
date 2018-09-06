@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import Kawax from 'kawax-js';
 import RootContainer from './containers/Root';
 import RootReducer from './reducers/RootReducer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 window.onload = () => {
   Kawax.new({
